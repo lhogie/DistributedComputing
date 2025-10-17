@@ -2,6 +2,7 @@ package distributed_computing;
 
 import java.io.IOException;
 import java.net.DatagramPacket;
+import java.util.Arrays;
 
 public class Server implements Runnable {
 
@@ -19,8 +20,9 @@ public class Server implements Runnable {
         while (true) {
             try {
                 agent.socket.receive(p);
-                var msg = new String(buf, 0, p.getLength());
-                System.out.println(msg);
+                var actualData = Arrays.copyOf(buf, p.getLength()); // extract datagram data
+                var newMsg = Message.decodeUsingJavaSerialization(actualData);
+                System.out.println(newMsg);
             } catch (IOException e) {
                 System.err.println("error while listening: " + e.getMessage());
             }
