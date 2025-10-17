@@ -26,12 +26,13 @@ public class Client {
         }
     }
 
-    private void send(String s, Peer p)
+    private void send(String s, Peer recipient)
         throws IOException
     {
         var data = s.getBytes();
         var d = new DatagramPacket(data, data.length);
-        d.setAddress(p.ipAddress);
+        d.setAddress(recipient.ipAddress);
+        d.setPort(recipient.listening_port);
         agent.socket.send(d);
     }
 }
