@@ -11,8 +11,10 @@ public class Agent {
     final Client client = new Client(this);
     final Server server = new Server();
 
+    public final static int DEFAULT_PORT = 5674;
+
     Agent() throws SocketException {
-        this.socket = new DatagramSocket(7834);
+        this.socket = new DatagramSocket(DEFAULT_PORT);
     }
 
     public void offer(String s) {
