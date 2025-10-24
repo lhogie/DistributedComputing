@@ -2,7 +2,7 @@ package distributed_computing;
 
 import java.io.*;
 
-public class Message {
+public class Message implements Serializable {
     String content;
     String sender;
 
