@@ -30,7 +30,6 @@ public class Client {
         throws IOException
     {
         var data = msg.encodeUsingJavaSerialization();
-
         var d = new DatagramPacket(data, data.length);
         d.setAddress(recipient.ipAddress);
         d.setPort(recipient.listening_port);

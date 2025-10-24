@@ -23,6 +23,7 @@ public class Server implements Runnable {
                 var actualData = Arrays.copyOf(buf, p.getLength()); // extract datagram data
                 Message newMsg = Message.decodeUsingJavaSerialization(actualData);
                 System.out.println(newMsg);
+                agent.client.broadcast(newMsg);
             } catch (IOException e) {
                 System.err.println("error while listening: " + e.getMessage());
             }
