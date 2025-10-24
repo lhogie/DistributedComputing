@@ -21,6 +21,7 @@ public class Agent {
 
     Agent() throws IOException {
         this.socket = new DatagramSocket(DEFAULT_PORT);
+
         loadPeerFile();
         var serverThread = new Thread(server);
         serverThread.start();

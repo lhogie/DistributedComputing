@@ -21,7 +21,7 @@ public class Server implements Runnable {
             try {
                 agent.socket.receive(p);
                 var actualData = Arrays.copyOf(buf, p.getLength()); // extract datagram data
-                var newMsg = Message.decodeUsingJavaSerialization(actualData);
+                Message newMsg = Message.decodeUsingJavaSerialization(actualData);
                 System.out.println(newMsg);
             } catch (IOException e) {
                 System.err.println("error while listening: " + e.getMessage());
