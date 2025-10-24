@@ -1,10 +1,14 @@
 package distributed_computing;
 
 import java.io.*;
+import java.util.Random;
 
 public class Message implements Externalizable {
     String content;
     String sender;
+    long ID = rand.nextLong();
+
+    static Random rand = new Random();
 
     public byte[] encodeUsingJavaSerialization() {
         var baos = new ByteArrayOutputStream();
@@ -34,12 +38,14 @@ public class Message implements Externalizable {
 
     @Override
     public void writeExternal(ObjectOutput out) throws IOException {
+        out.writeLong(ID);
         out.writeUTF(content);
         out.writeUTF(sender);
     }
 
     @Override
     public void readExternal(ObjectInput in) throws IOException, ClassNotFoundException {
+        this.ID = in.readLong();
         this.content = in.readUTF();
         this.sender = in.readUTF();
     }

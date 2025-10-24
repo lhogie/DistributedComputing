@@ -3,10 +3,13 @@ package distributed_computing;
 import java.io.IOException;
 import java.net.DatagramPacket;
 import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 
 public class Server implements Runnable {
 
     private final Agent agent;
+    Set<Long> alreadyReceivedMessages = new HashSet<>();
 
     public Server(Agent agent) {
         this.agent = agent;
@@ -23,9 +26,13 @@ public class Server implements Runnable {
                 var actualData = Arrays.copyOf(buf, p.getLength()); // extract datagram data
                 Message newMsg = Message.decodeUsingJavaSerialization(actualData);
                 System.out.println(newMsg);
-                agent.client.broadcast(newMsg);
-            } catch (IOException e) {
-                System.err.println("error while listening: " + e.getMessage());
+
+                if (! alreadyReceivedMessages.contains(newMsg.ID)) {
+                    alreadyReceivedMessages.add(newMsg.ID);
+                    agent.client.broadcast(newMsg);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
             }
         }
     }
