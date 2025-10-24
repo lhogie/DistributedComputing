@@ -11,6 +11,7 @@ public class Main {
         throws Exception {
 
         var agent = new Agent();
+        agent.nickname = args[0];
         agent.processUserInputFromStdIn();
     }
 }

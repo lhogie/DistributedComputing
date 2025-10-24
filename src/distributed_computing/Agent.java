@@ -15,6 +15,7 @@ public class Agent {
     final Set<Peer> peers = new HashSet<Peer>();
     final Client client = new Client(this);
     final Server server = new Server(this);
+    String nickname;
 
     public final static int DEFAULT_PORT = 5674;
 
@@ -45,8 +46,10 @@ public class Agent {
             System.out.println("> ");
 
             while (input.hasNextLine()) {
-                var s = input.nextLine();
-                client.broadcast(s);
+                var msg = new Message();
+                msg.content =input.nextLine();
+                msg.sender = nickname;
+                client.broadcast(msg);
             }
         }
     }

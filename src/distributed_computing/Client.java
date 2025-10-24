@@ -15,7 +15,7 @@ public class Client {
         this.agent = agent;
     }
 
-    public void broadcast(String s) {
+    public void broadcast(Message s) {
         for (var p : agent.peers){
             try{
                 send(s, p);
