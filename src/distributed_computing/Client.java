@@ -29,7 +29,7 @@ public class Client {
     private void send(Message msg, Peer recipient)
         throws IOException
     {
-        var data = msg.encode();
+        var data = msg.encodeUsingJavaSerialization();
 
         var d = new DatagramPacket(data, data.length);
         d.setAddress(recipient.ipAddress);

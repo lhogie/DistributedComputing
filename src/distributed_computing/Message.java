@@ -27,4 +27,8 @@ public class Message {
         }
     }
 
+    @Override
+    public String toString() {
+        return sender + " says: "+ content;
+    }
 }
