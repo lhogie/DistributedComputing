@@ -8,7 +8,7 @@ import java.util.Random;
 public class Message implements Externalizable {
     String content;
     long ID = rand.nextLong();
-    static int version = 1;
+    static int version = 2;
 
     List<Peer> route = new ArrayList<>();
 
