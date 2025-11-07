@@ -16,10 +16,12 @@ public class Client {
         this.agent = agent;
     }
 
-    public void broadcast(Message s) {
+    public void broadcast(Message msg) {
+        addLocalPeerInformationToRoute(msg);
+
         for (var p : agent.peers){
             try{
-                send(s, p);
+                sendMessage(msg, p);
             }
             catch (IOException err){
                 System.err.println("cannot send to " + p);
@@ -30,16 +32,26 @@ public class Client {
     private void send(Message msg, Peer recipient)
         throws IOException
     {
-        var localPeerInformation = new Peer();
-        localPeerInformation.listening_port = Agent.DEFAULT_PORT;
-        localPeerInformation.ipAddress = agent.ipAddress;
-        localPeerInformation.nickname = agent.nickname;
-        msg.route.add(localPeerInformation);
+        addLocalPeerInformationToRoute(msg);
+        sendMessage(msg, recipient);
+    }
 
+    private void sendMessage(Message msg, Peer recipient) throws IOException {
         var data = msg.encodeUsingJavaSerialization();
         var d = new DatagramPacket(data, data.length);
         d.setAddress(recipient.ipAddress);
         d.setPort(recipient.listening_port);
         agent.socket.send(d);
     }
+
+    private void addLocalPeerInformationToRoute(Message msg) {
+        var localPeerInformation = new Peer();
+        localPeerInformation.listening_port = Agent.DEFAULT_PORT;
+        localPeerInformation.ipAddress = agent.ipAddress;
+        localPeerInformation.nickname = agent.nickname;
+        msg.route.add(localPeerInformation);
+
+    }
+
+
 }

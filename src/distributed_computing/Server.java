@@ -35,6 +35,9 @@ public class Server implements Runnable {
                         alreadyReceivedMessages.add(newMsg.ID);
                         agent.client.broadcast(newMsg);
                     }
+                    else{
+                        System.err.println("dropping message " + newMsg);
+                    }
                 }
             } catch (Exception e) {
                 e.printStackTrace();

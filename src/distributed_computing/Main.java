@@ -10,12 +10,17 @@ public class Main {
     public static void main(String[] args)
         throws Exception {
 
-        System.out.println("The version my JVM is: " + System.getProperty("java.version"));
 
         var agent = new Agent();
 
-        agent.nickname = args.length == 0 ? "foobar" : args[0];
+        if (args.length < 2) {
+            System.err.println("Missing arguments NICKNAME IP_ADDRESS");
+            return;
+        }
+
+        agent.nickname = args[0];
         agent.ipAddress = InetAddress.getByName(args[1]);
+        System.out.println("My IP address is: " + agent.ipAddress);
         agent.processUserInputFromStdIn();
     }
 }
