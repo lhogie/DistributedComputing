@@ -49,9 +49,7 @@ public class Client {
         localPeerInformation.listening_port = Agent.DEFAULT_PORT;
         localPeerInformation.ipAddress = agent.ipAddress;
         localPeerInformation.nickname = agent.nickname;
+        localPeerInformation.version = Message.version;
         msg.route.add(localPeerInformation);
-
     }
-
-
 }

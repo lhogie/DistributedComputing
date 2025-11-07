@@ -7,7 +7,6 @@ import java.util.Random;
 
 public class Message implements Externalizable {
     String content;
-    String sender;
     long ID = rand.nextLong();
     static int version = 1;
 
@@ -38,15 +37,13 @@ public class Message implements Externalizable {
 
     @Override
     public String toString() {
-        return sender + " says: "+ content + "\nroute: " + route;
+        return route.getFirst() + " says: "+ content + "\nroute: " + route;
     }
 
     @Override
     public void writeExternal(ObjectOutput out) throws IOException {
         out.writeLong(ID);
         out.writeUTF(content);
-        out.writeUTF(sender);
-        out.writeInt(version);
         out.writeObject(route);
     }
 
@@ -54,8 +51,6 @@ public class Message implements Externalizable {
     public void readExternal(ObjectInput in) throws IOException, ClassNotFoundException {
         this.ID = in.readLong();
         this.content = in.readUTF();
-        this.sender = in.readUTF();
-        this.version = in.readInt();
         this.route = (List<Peer>) in.readObject();
     }
 }

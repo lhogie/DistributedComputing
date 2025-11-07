@@ -10,12 +10,14 @@ public class Peer implements Externalizable {
     int listening_port = Agent.DEFAULT_PORT;
     InetAddress ipAddress;
     String nickname;
+    int version;
 
     @Override
     public void writeExternal(ObjectOutput out) throws IOException {
         out.writeObject(ipAddress);
         out.writeInt(listening_port);
         out.writeUTF(nickname);
+        out.writeInt(version);
     }
 
     @Override
@@ -23,6 +25,7 @@ public class Peer implements Externalizable {
         this.ipAddress = (InetAddress) in.readObject();
         this.listening_port = in.readInt();
         this.nickname = in.readUTF();
+        this.version = in.readInt();
     }
 
     @Override

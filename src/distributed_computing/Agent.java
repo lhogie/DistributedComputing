@@ -50,7 +50,6 @@ public class Agent {
             while (input.hasNextLine()) {
                 var msg = new Message();
                 msg.content =input.nextLine();
-                msg.sender = nickname;
                 client.broadcast(msg);
             }
         }
