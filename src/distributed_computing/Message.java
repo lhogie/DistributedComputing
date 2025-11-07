@@ -9,7 +9,7 @@ public class Message implements Externalizable {
     String content;
     String sender;
     long ID = rand.nextLong();
-    static int version = 0;
+    static int version = 1;
 
     List<Peer> route = new ArrayList<>();
 
