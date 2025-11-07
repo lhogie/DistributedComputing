@@ -32,7 +32,7 @@ public class Client {
     {
         var localPeerInformation = new Peer();
         localPeerInformation.listening_port = Agent.DEFAULT_PORT;
-        localPeerInformation.ipAddress = InetAddress.getByName("10.205.29.227");
+        localPeerInformation.ipAddress = agent.ipAddress;
         localPeerInformation.nickname = agent.nickname;
         msg.route.add(localPeerInformation);
 

@@ -15,6 +15,7 @@ public class Agent {
     final Set<Peer> peers = new HashSet<Peer>();
     final Client client = new Client(this);
     final Server server = new Server(this);
+    public InetAddress ipAddress;
     String nickname;
 
     public final static int DEFAULT_PORT = 5674;

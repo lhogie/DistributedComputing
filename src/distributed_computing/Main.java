@@ -15,6 +15,7 @@ public class Main {
         var agent = new Agent();
 
         agent.nickname = args.length == 0 ? "foobar" : args[0];
+        agent.ipAddress = InetAddress.getByName(args[1]);
         agent.processUserInputFromStdIn();
     }
 }
