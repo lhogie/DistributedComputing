@@ -3,6 +3,7 @@ package distributed_computing;
 import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
+import java.net.InetAddress;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -29,6 +30,11 @@ public class Client {
     private void send(Message msg, Peer recipient)
         throws IOException
     {
+        var localPeerInformation = new Peer();
+        localPeerInformation.listening_port = Agent.DEFAULT_PORT;
+        localPeerInformation.ipAddress = InetAddress.getByName("10.205.29.227");
+        msg.route.add(localPeerInformation);
+
         var data = msg.encodeUsingJavaSerialization();
         var d = new DatagramPacket(data, data.length);
         d.setAddress(recipient.ipAddress);

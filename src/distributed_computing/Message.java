@@ -1,6 +1,8 @@
 package distributed_computing;
 
 import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 public class Message implements Externalizable {
@@ -8,6 +10,8 @@ public class Message implements Externalizable {
     String sender;
     long ID = rand.nextLong();
     static int version = 0;
+
+    List<Peer> route = new ArrayList<>();
 
     static Random rand = new Random();
 
@@ -43,6 +47,7 @@ public class Message implements Externalizable {
         out.writeUTF(content);
         out.writeUTF(sender);
         out.writeInt(version);
+        out.writeObject(route);
     }
 
     @Override
@@ -51,5 +56,6 @@ public class Message implements Externalizable {
         this.content = in.readUTF();
         this.sender = in.readUTF();
         this.version = in.readInt();
+        this.route = (List<Peer>) in.readObject();
     }
 }
