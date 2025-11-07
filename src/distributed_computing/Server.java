@@ -27,9 +27,14 @@ public class Server implements Runnable {
                 Message newMsg = Message.decodeUsingJavaSerialization(actualData);
                 System.out.println(newMsg);
 
-                if (! alreadyReceivedMessages.contains(newMsg.ID)) {
-                    alreadyReceivedMessages.add(newMsg.ID);
-                    agent.client.broadcast(newMsg);
+                if (newMsg.version != Message.version) {
+                    System.err.println("warning: " + newMsg.sender + " has version " + newMsg.version + ", while our version is " + Message.version);
+                }
+                else{
+                    if (! alreadyReceivedMessages.contains(newMsg.ID)) {
+                        alreadyReceivedMessages.add(newMsg.ID);
+                        agent.client.broadcast(newMsg);
+                    }
                 }
             } catch (Exception e) {
                 e.printStackTrace();

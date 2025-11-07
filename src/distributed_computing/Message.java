@@ -7,6 +7,7 @@ public class Message implements Externalizable {
     String content;
     String sender;
     long ID = rand.nextLong();
+    static int version = 0;
 
     static Random rand = new Random();
 
@@ -41,6 +42,7 @@ public class Message implements Externalizable {
         out.writeLong(ID);
         out.writeUTF(content);
         out.writeUTF(sender);
+        out.writeInt(version);
     }
 
     @Override
@@ -48,5 +50,6 @@ public class Message implements Externalizable {
         this.ID = in.readLong();
         this.content = in.readUTF();
         this.sender = in.readUTF();
+        this.version = in.readInt();
     }
 }
