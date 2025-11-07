@@ -29,7 +29,7 @@ public class Server implements Runnable {
                 agent.peers.addAll(newMsg.route);
 
                 if (newMsg.version != Message.version) {
-                    System.err.println("warning: " + newMsg.sender + " has version " + newMsg.version + ", while our version is " + Message.version);
+                    System.err.println("warning: " + newMsg.route.getFirst() + " has version " + newMsg.version + ", while our version is " + Message.version);
                 }
                 else{
                     if (! alreadyReceivedMessages.contains(newMsg.ID)) {
