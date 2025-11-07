@@ -38,7 +38,7 @@ public class Message implements Externalizable {
 
     @Override
     public String toString() {
-        return sender + " says: "+ content;
+        return sender + " says: "+ content + "\nroute: " + route;
     }
 
     @Override
