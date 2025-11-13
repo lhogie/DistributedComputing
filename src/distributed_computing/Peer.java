@@ -32,4 +32,17 @@ public class Peer implements Externalizable {
     public String toString() {
         return nickname;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
+        Peer peer = (Peer) obj;
+        return ipAddress != null && ipAddress.equals(peer.ipAddress);
+    }
+
+    @Override
+    public int hashCode() {
+        return ipAddress != null ? ipAddress.hashCode() : 0;
+    }
 }

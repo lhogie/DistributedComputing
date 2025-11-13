@@ -31,13 +31,21 @@ public class Message implements Externalizable {
             return (Message) new ObjectInputStream(new ByteArrayInputStream(bytes)).readObject();
         }
         catch (IOException | ClassNotFoundException e){
-           throw new IllegalStateException(e);
+            throw new IllegalStateException(e);
         }
     }
 
     @Override
     public String toString() {
-        return route.getFirst() + " says: "+ content + "\nroute: " + route;
+        StringBuilder sb = new StringBuilder();
+        sb.append("\n╔════════════════════════════════════════╗\n");
+        sb.append("║ Message from: ").append(route.isEmpty() ? "Unknown" : route.getFirst()).append("\n");
+        sb.append("╠════════════════════════════════════════╣\n");
+        sb.append("║ ").append(content).append("\n");
+        sb.append("╠════════════════════════════════════════╣\n");
+        sb.append("║ Route: ").append(route).append("\n");
+        sb.append("╚════════════════════════════════════════╝");
+        return sb.toString();
     }
 
     @Override

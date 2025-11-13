@@ -8,18 +8,18 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args)
-        throws Exception {
+            throws Exception {
 
 
         var agent = new Agent();
 
-        if (args.length < 2) {
-            System.err.println("Missing arguments NICKNAME IP_ADDRESS");
-            return;
-        }
+//        if (args.length < 2) {
+//            System.err.println("Missing arguments NICKNAME IP_ADDRESS");
+//            return;
+//        }
 
-        agent.nickname = args[0];
-        agent.ipAddress = InetAddress.getByName(args[1]);
+        agent.nickname = "Ahmad";
+        agent.ipAddress = InetAddress.getByName("192.168.1.122");
         System.out.println("My IP address is: " + agent.ipAddress);
         agent.processUserInputFromStdIn();
     }

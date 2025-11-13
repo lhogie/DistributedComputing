@@ -49,8 +49,9 @@ public class Agent {
 
             while (input.hasNextLine()) {
                 var msg = new Message();
-                msg.content =input.nextLine();
+                msg.content = input.nextLine();
                 client.broadcast(msg);
+                System.out.println("\n[SENT] Your message: \"" + msg.content + "\" broadcast to " + peers.size() + " peer(s)");
             }
         }
     }
