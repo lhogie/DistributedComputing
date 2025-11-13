@@ -17,9 +17,19 @@ public class Client {
     }
 
     public void broadcast(Message msg) {
-        addLocalPeerInformationToRoute(msg);
+        broadcast(msg, true);
+    }
+
+    public void broadcast(Message msg, boolean addToRoute) {
+        if (addToRoute) {
+            addLocalPeerInformationToRoute(msg);
+        }
 
         for (var p : agent.peers){
+            // Don't send to ourselves
+            if (p.ipAddress != null && p.ipAddress.equals(agent.ipAddress)) {
+                continue;
+            }
             try{
                 sendMessage(msg, p);
             }
@@ -30,7 +40,7 @@ public class Client {
     }
 
     private void send(Message msg, Peer recipient)
-        throws IOException
+            throws IOException
     {
         addLocalPeerInformationToRoute(msg);
         sendMessage(msg, recipient);

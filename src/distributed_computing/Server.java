@@ -26,7 +26,12 @@ public class Server implements Runnable {
                 var actualData = Arrays.copyOf(buf, p.getLength()); // extract datagram data
                 Message newMsg = Message.decodeUsingJavaSerialization(actualData);
 
-                agent.peers.addAll(newMsg.route);
+                // Add peers from route, but filter out ourselves
+                for (var peer : newMsg.route) {
+                    if (peer.ipAddress != null && !peer.ipAddress.equals(agent.ipAddress)) {
+                        agent.peers.add(peer);
+                    }
+                }
 
                 if (newMsg.version != Message.version) {
                     System.err.println("warning: " + newMsg.route.getFirst() + " has version " + newMsg.version + ", while our version is " + Message.version);
@@ -34,8 +39,8 @@ public class Server implements Runnable {
                 else{
                     if (! alreadyReceivedMessages.contains(newMsg.ID)) {
                         alreadyReceivedMessages.add(newMsg.ID);
-                        agent.client.broadcast(newMsg);
-                        System.out.println(newMsg);
+                        System.out.println("\n[RECEIVED]" + newMsg);
+                        agent.client.broadcast(newMsg, false); // Don't add to route when forwarding
                     }
                     else{
                         System.err.println("dropping message " + newMsg);
