@@ -13,6 +13,7 @@ import java.util.Set;
 public class Agent {
     final DatagramSocket socket;
     final Set<Peer> peers = new HashSet<Peer>();
+    final Set<Service> services = new HashSet<>();
     final Client client = new Client(this);
     final Server server = new Server(this);
     public InetAddress ipAddress;
@@ -22,6 +23,9 @@ public class Agent {
 
     Agent() throws IOException {
         this.socket = new DatagramSocket(DEFAULT_PORT);
+
+        services.add(new ChatService());
+
 
         loadPeerFile();
         var serverThread = new Thread(server);
@@ -48,7 +52,8 @@ public class Agent {
             System.out.println("> ");
 
             while (input.hasNextLine()) {
-                var msg = new Message(input.nextLine(), localPeer());
+                var msg = new Message("chat", localPeer());
+                msg.serviceParameters.add(input.nextLine());
                 client.broadcast(msg);
             }
         }
@@ -61,5 +66,15 @@ public class Agent {
         localPeerInformation.nickname = nickname;
         localPeerInformation.version = Message.version;
         return localPeerInformation;
+    }
+
+    public Service findService(String serviceName) {
+        for (var service : services){
+            if (service.name.equals(serviceName)){
+                return service;
+            }
+        }
+
+        return null; // no service with that name could be found
     }
 }

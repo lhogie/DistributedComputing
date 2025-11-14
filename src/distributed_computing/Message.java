@@ -8,7 +8,8 @@ import java.util.Random;
 public class Message implements Externalizable {
     // should be "final" (use final as much as possible !!!)
     // cannot use that because deserialization (via extranalization) requires attributes to be non-final
-     String content;
+    String serviceName;
+    List<String> serviceParameters = new ArrayList<>();
     long ID = rand.nextLong();
     static int version = 2;
 
@@ -26,14 +27,14 @@ public class Message implements Externalizable {
 
 
 
-    public Message(String content, Peer sender){
-        if (content == null)
+    public Message(String serviceName, Peer sender){
+        if (serviceName == null)
             throw new IllegalArgumentException("content cannot be null");
 
         if (sender == null)
             throw new IllegalArgumentException("sender cannot be null");
 
-        this.content = content;
+        this.serviceName = serviceName;
         this.route.add(sender);
     }
 
@@ -61,20 +62,22 @@ public class Message implements Externalizable {
 
     @Override
     public String toString() {
-        return route.get(0) + " says: "+ content + "\nroute: " + route;
+        return route.get(0) + " executes service: "+ serviceName + "with parms: " + serviceParameters + "\nroute: " + route;
     }
 
     @Override
     public void writeExternal(ObjectOutput out) throws IOException {
         out.writeLong(ID);
-        out.writeUTF(content);
+        out.writeUTF(serviceName);
+        out.writeObject(serviceParameters);
         out.writeObject(route);
     }
 
     @Override
     public void readExternal(ObjectInput in) throws IOException, ClassNotFoundException {
         this.ID = in.readLong();
-        this.content = in.readUTF();
+        this.serviceName = in.readUTF();
+        this.serviceParameters = (List<String>) in.readObject();
         this.route = (List<Peer>) in.readObject();
     }
 }

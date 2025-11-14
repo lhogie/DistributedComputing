@@ -41,8 +41,13 @@ public class Server implements Runnable {
                             }
                         }
 
+                        Service service = agent.findService(newMsg.serviceName);
+
+                        if (service != null) {
+                            service.run(newMsg.serviceParameters);
+                        }
+
                         agent.client.broadcast(newMsg);
-                        System.out.println(newMsg);
                     }
                     else{
 //                        System.err.println("dropping message " + newMsg);
