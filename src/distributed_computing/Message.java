@@ -61,7 +61,7 @@ public class Message implements Externalizable {
 
     @Override
     public String toString() {
-        return route.getFirst() + " says: "+ content + "\nroute: " + route;
+        return route.get(0) + " says: "+ content + "\nroute: " + route;
     }
 
     @Override
