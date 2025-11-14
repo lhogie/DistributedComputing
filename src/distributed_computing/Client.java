@@ -19,12 +19,14 @@ public class Client {
     public void broadcast(Message msg) {
         addLocalPeerInformationToRoute(msg);
 
-        for (var p : agent.peers) {
-            try{
-                sendMessage(msg, p);
-            }
-            catch (IOException err){
-                System.err.println("cannot send to " + p);
+        synchronized (agent.peers) {
+            for (var p : agent.peers) {
+                try{
+                    sendMessage(msg, p);
+                }
+                catch (IOException err){
+                    System.err.println("cannot send to " + p);
+                }
             }
         }
     }

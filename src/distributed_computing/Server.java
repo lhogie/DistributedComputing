@@ -36,7 +36,9 @@ public class Server implements Runnable {
                         alreadyReceivedMessages.add(newMsg.ID);
 
                         for (var relay : newMsg.route) {
-                            agent.peers.add(relay);
+                            synchronized (agent.peers){
+                                agent.peers.add(relay);
+                            }
                         }
 
                         agent.client.broadcast(newMsg);
