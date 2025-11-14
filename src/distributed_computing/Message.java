@@ -16,6 +16,16 @@ public class Message implements Externalizable {
 
     static Random rand = new Random();
 
+    /*
+    Allows the creation of empty (invalid) messages because déserialization (via externalization) requires it!
+    Don't allow this if you don't use externalization
+    THE PROGRAMMER SHOULD NOT CALL THIS CONSTRUCTOR!!!
+     */
+    public Message(){
+    }
+
+
+
     public Message(String content, Peer sender){
         if (content == null)
             throw new IllegalArgumentException("content cannot be null");
