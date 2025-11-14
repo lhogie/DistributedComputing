@@ -25,6 +25,7 @@ public class Agent {
         this.socket = new DatagramSocket(DEFAULT_PORT);
 
         services.add(new ChatService());
+        services.add(new KillService());
 
 
         loadPeerFile();

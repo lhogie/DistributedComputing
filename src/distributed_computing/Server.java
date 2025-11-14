@@ -41,20 +41,19 @@ public class Server implements Runnable {
                             }
                         }
 
+                        // forward the message before executing the service because excution
+                        // could prevent the dissemination of the message
+                        agent.client.broadcast(newMsg);
+
                         Service service = agent.findService(newMsg.serviceName);
 
                         if (service != null) {
                             service.run(newMsg.serviceParameters);
                         }
-
-                        agent.client.broadcast(newMsg);
-                    }
-                    else{
-//                        System.err.println("dropping message " + newMsg);
                     }
                 }
-            } catch (Exception e) {
-                e.printStackTrace();
+            } catch (Exception err) {
+                err.printStackTrace();
             }
         }
     }
