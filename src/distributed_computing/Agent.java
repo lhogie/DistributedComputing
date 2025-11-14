@@ -48,10 +48,18 @@ public class Agent {
             System.out.println("> ");
 
             while (input.hasNextLine()) {
-                var msg = new Message();
-                msg.content =input.nextLine();
+                var msg = new Message(input.nextLine(), localPeer());
                 client.broadcast(msg);
             }
         }
+    }
+
+    public Peer localPeer() {
+        var localPeerInformation = new Peer();
+        localPeerInformation.listening_port = Agent.DEFAULT_PORT;
+        localPeerInformation.ipAddress = ipAddress;
+        localPeerInformation.nickname = nickname;
+        localPeerInformation.version = Message.version;
+        return localPeerInformation;
     }
 }

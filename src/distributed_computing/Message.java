@@ -6,13 +6,27 @@ import java.util.List;
 import java.util.Random;
 
 public class Message implements Externalizable {
-    String content;
+    // should be "final" (use final as much as possible !!!)
+    // cannot use that because deserialization (via extranalization) requires attributes to be non-final
+     String content;
     long ID = rand.nextLong();
     static int version = 2;
 
     List<Peer> route = new ArrayList<>();
 
     static Random rand = new Random();
+
+    public Message(String content, Peer sender){
+        if (content == null)
+            throw new IllegalArgumentException("content cannot be null");
+
+        if (sender == null)
+            throw new IllegalArgumentException("sender cannot be null");
+
+        this.content = content;
+        this.route.add(sender);
+    }
+
 
     public byte[] encodeUsingJavaSerialization() {
         var baos = new ByteArrayOutputStream();

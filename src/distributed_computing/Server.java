@@ -34,11 +34,16 @@ public class Server implements Runnable {
                 else{
                     if (! alreadyReceivedMessages.contains(newMsg.ID)) {
                         alreadyReceivedMessages.add(newMsg.ID);
+
+                        for (var relay : newMsg.route) {
+                            agent.peers.add(relay);
+                        }
+
                         agent.client.broadcast(newMsg);
                         System.out.println(newMsg);
                     }
                     else{
-                        System.err.println("dropping message " + newMsg);
+//                        System.err.println("dropping message " + newMsg);
                     }
                 }
             } catch (Exception e) {

@@ -19,7 +19,7 @@ public class Client {
     public void broadcast(Message msg) {
         addLocalPeerInformationToRoute(msg);
 
-        for (var p : agent.peers){
+        for (var p : agent.peers) {
             try{
                 sendMessage(msg, p);
             }
@@ -45,11 +45,6 @@ public class Client {
     }
 
     private void addLocalPeerInformationToRoute(Message msg) {
-        var localPeerInformation = new Peer();
-        localPeerInformation.listening_port = Agent.DEFAULT_PORT;
-        localPeerInformation.ipAddress = agent.ipAddress;
-        localPeerInformation.nickname = agent.nickname;
-        localPeerInformation.version = Message.version;
-        msg.route.add(localPeerInformation);
+        msg.route.add(agent.localPeer());
     }
 }
