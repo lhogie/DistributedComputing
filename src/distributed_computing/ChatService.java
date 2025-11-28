@@ -2,9 +2,11 @@ package distributed_computing;
 
 import java.util.List;
 
-public class ChatService extends Service {
-    public ChatService(){
-        super("chat");
+public class ChatService implements Service {
+
+    @Override
+    public String getName() {
+        return "chat";
     }
 
     @Override

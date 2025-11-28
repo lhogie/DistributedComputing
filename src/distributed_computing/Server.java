@@ -41,7 +41,7 @@ public class Server implements Runnable {
                             }
                         }
 
-                        // forward the message before executing the service because excution
+                        // forward the message before executing the service because execution
                         // could prevent the dissemination of the message
                         agent.client.broadcast(newMsg);
 

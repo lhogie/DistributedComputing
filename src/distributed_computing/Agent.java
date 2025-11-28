@@ -53,9 +53,17 @@ public class Agent {
             System.out.println("> ");
 
             while (input.hasNextLine()) {
-                var msg = new Message("chat", localPeer());
-                msg.serviceParameters.add(input.nextLine());
-                client.broadcast(msg);
+                String line =input.nextLine();
+
+                // IRC-style of requesting commands
+                if (line.startsWith("/kill")) {
+                    var msg = new Message("kill", localPeer());
+                    client.broadcast(msg);
+                }else{
+                    var msg = new Message("chat", localPeer());
+                    msg.serviceParameters.add(line);
+                    client.broadcast(msg);
+                }
             }
         }
     }
@@ -71,7 +79,7 @@ public class Agent {
 
     public Service findService(String serviceName) {
         for (var service : services){
-            if (service.name.equals(serviceName)){
+            if (service.getName().equals(serviceName)){
                 return service;
             }
         }
